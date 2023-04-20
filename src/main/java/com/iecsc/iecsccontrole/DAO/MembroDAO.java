@@ -35,8 +35,8 @@ public class MembroDAO {
         try{
             ps = con.prepareStatement(sql);
             ps.setString(1, membroDTO.getName());
-            ps.setString(2, membroDTO.getEstado_civil());
-            ps.setString(3, membroDTO.getData_nascimento());
+            ps.setString(2, membroDTO.getEstadoCivil());
+            ps.setString(3, membroDTO.getDataNascimento());
             ps.executeUpdate();
             con.close();
             return rs;
