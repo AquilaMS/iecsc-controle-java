@@ -4,10 +4,10 @@ import com.iecsc.iecsccontrole.DAO.MembroDAO;
 import com.iecsc.iecsccontrole.DAO.Teste;
 import com.iecsc.iecsccontrole.DTO.MembroDTO;
 import com.iecsc.iecsccontrole.Utils.AlertUTIL;
+import com.iecsc.iecsccontrole.Utils.CurrencyConverter;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
-import java.sql.SQLException;
 import java.time.LocalDate;
 
 public class HelloController {
@@ -22,6 +22,10 @@ public class HelloController {
 
     @FXML
     private DatePicker birthDateTextField;
+    //
+    //
+    @FXML
+    private TextField insertPutTextField;
 
     @FXML
     protected void  onHelloButtonClick() {
@@ -29,6 +33,20 @@ public class HelloController {
         Teste teste = new Teste();
         teste.testarConnection();
     }
+
+
+    @FXML
+    public void initialize() {
+        insertPutTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            try{
+                CurrencyConverter converter = new CurrencyConverter();
+                insertPutTextField.setText(converter.convertStringToCurrency(newValue));
+            } catch (Exception err) {
+                System.out.println(err.getMessage());
+            }
+        });
+    }
+
 
     @FXML
     protected void onInsertMembro(){
@@ -58,4 +76,5 @@ public class HelloController {
             alertUTIL.showAlert(Alert.AlertType.ERROR,"FALHA", err.toString());
         }
     }
+
 }
