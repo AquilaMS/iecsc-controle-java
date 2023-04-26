@@ -8,6 +8,7 @@ module com.iecsc.iecsccontrole {
     requires money.api;
     requires moneta;
 
+
     opens com.iecsc.iecsccontrole to javafx.fxml;
     exports com.iecsc.iecsccontrole;
 }

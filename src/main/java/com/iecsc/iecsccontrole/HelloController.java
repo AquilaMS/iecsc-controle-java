@@ -3,6 +3,7 @@ package com.iecsc.iecsccontrole;
 import com.iecsc.iecsccontrole.DAO.MembroDAO;
 import com.iecsc.iecsccontrole.DAO.Teste;
 import com.iecsc.iecsccontrole.DTO.MembroDTO;
+import com.iecsc.iecsccontrole.Services.MembroService;
 import com.iecsc.iecsccontrole.Utils.AlertUTIL;
 import com.iecsc.iecsccontrole.Utils.CurrencyConverter;
 import javafx.fxml.FXML;
@@ -34,7 +35,6 @@ public class HelloController {
         teste.testarConnection();
     }
 
-
     @FXML
     public void initialize() {
         insertPutTextField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -47,34 +47,10 @@ public class HelloController {
         });
     }
 
-
     @FXML
     protected void onInsertMembro(){
-        try{
-            MembroDTO membroDTO = new MembroDTO();
-            MembroDAO membroDAO = new MembroDAO();
-
-            RadioButton estadoCivilRadioButton = (RadioButton) estadoCivil.getSelectedToggle();
-            String estadoCivilValue = estadoCivilRadioButton.getText();
-            LocalDate dateBirthLocalDate = birthDateTextField.getValue();
-
-            AlertUTIL alertUTIL = new AlertUTIL();
-
-            membroDTO.setName(nameTextField.getText());
-            membroDTO.setEstadoCivil(estadoCivilValue);
-            membroDTO.setDataNascimento(dateBirthLocalDate.toString());
-
-            membroDAO.insertMembro(membroDTO);
-
-            nameTextField.setText(null);
-            birthDateTextField.setValue(null);
-
-            alertUTIL.showAlert(Alert.AlertType.INFORMATION,"SUCESSO", membroDTO.toString());
-
-        }catch (Exception err){
-            AlertUTIL alertUTIL = new AlertUTIL();
-            alertUTIL.showAlert(Alert.AlertType.ERROR,"FALHA", err.toString());
-        }
+        MembroService membroService = new MembroService();
+        membroService.insertMembro(birthDateTextField, nameTextField, estadoCivil);
     }
 
 }
