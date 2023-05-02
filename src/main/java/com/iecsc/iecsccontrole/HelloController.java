@@ -4,10 +4,16 @@ import com.iecsc.iecsccontrole.DAO.MembroDAO;
 import com.iecsc.iecsccontrole.DAO.Teste;
 import com.iecsc.iecsccontrole.DTO.MembroDTO;
 import com.iecsc.iecsccontrole.Services.MembroService;
+import com.iecsc.iecsccontrole.Services.RegisterService;
 import com.iecsc.iecsccontrole.Utils.AlertUTIL;
 import com.iecsc.iecsccontrole.Utils.CurrencyConverter;
+import com.iecsc.iecsccontrole.Utils.RegisterType;
+import javafx.beans.Observable;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import org.controlsfx.control.textfield.TextFields;
 
 import java.time.LocalDate;
 
@@ -26,7 +32,10 @@ public class HelloController {
     //
     //
     @FXML
-    private TextField insertPutTextField;
+    private TextField insertValueTextField;
+
+    @FXML
+    private TextField insertRegisterTypeTextField;
 
     @FXML
     protected void  onHelloButtonClick() {
@@ -37,10 +46,15 @@ public class HelloController {
 
     @FXML
     public void initialize() {
-        insertPutTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+        ObservableList<String> registerTypesOptions = FXCollections.observableArrayList();
+        for(RegisterType registerType : RegisterType.values()){
+            registerTypesOptions.add(registerType.name());
+        }
+        TextFields.bindAutoCompletion(insertRegisterTypeTextField, registerTypesOptions);
+        insertValueTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             try{
                 CurrencyConverter converter = new CurrencyConverter();
-                insertPutTextField.setText(converter.convertStringToCurrency(newValue));
+                insertValueTextField.setText(converter.convertStringToCurrency(newValue));
             } catch (Exception err) {
                 System.out.println(err.getMessage());
             }
@@ -53,4 +67,9 @@ public class HelloController {
         membroService.insertMembro(birthDateTextField, nameTextField, estadoCivil);
     }
 
+    @FXML
+    protected void onInsertRegister(){
+        RegisterService registerService = new RegisterService();
+        registerService.insertRegister(insertValueTextField, insertRegisterTypeTextField);
+    }
 }
