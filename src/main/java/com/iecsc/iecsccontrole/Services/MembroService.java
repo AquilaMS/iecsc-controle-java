@@ -6,7 +6,11 @@ import com.iecsc.iecsccontrole.Utils.AlertUTIL;
 import javafx.scene.control.*;
 
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MembroService {
@@ -22,8 +26,8 @@ public class MembroService {
             LocalDate dateBirthLocalDate = birthDateText.getValue();
 
             membroDTO.setName(nameText.getText());
-            membroDTO.setEstadoCivil(estadoCivilValue);
-            membroDTO.setDataNascimento(dateBirthLocalDate.toString());
+            membroDTO.setEstado_civil(estadoCivilValue);
+            membroDTO.setData_nascimento(dateBirthLocalDate.toString());
 
             membroDAO.insertMembro(membroDTO);
 
@@ -34,6 +38,27 @@ public class MembroService {
 
         }catch (Exception err){
             alertUTIL.showAlert(Alert.AlertType.ERROR,"FALHA", err.toString());
+        }
+    }
+
+    public List<MembroDTO> getAllMembros(){
+        ResultSet rs;
+        try{
+            List<MembroDTO> listMembro = new ArrayList<>();
+
+            MembroDAO membrodao = new MembroDAO();
+            rs = membrodao.getAllMembros();
+            while(rs.next()){
+                MembroDTO membrodto = new MembroDTO();
+                membrodto.setName(rs.getString(1));
+                membrodto.setEstado_civil(rs.getString(2));
+                membrodto.setData_nascimento(rs.getString(3));
+                listMembro.add(membrodto);
+            }
+            return listMembro;
+        }catch (SQLException err){
+            System.out.println(err.getMessage());
+            return null;
         }
     }
 }

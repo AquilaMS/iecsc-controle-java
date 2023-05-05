@@ -8,20 +8,20 @@ import lombok.Setter;
 public class MembroDTO {
 
     private String name;
-    private String estadoCivil;
-    private String dataNascimento;
+    private String estado_civil;
+    private String data_nascimento;
 
     public void clearFields(){
         this.name = "";
-        this.dataNascimento = "";
-        this.estadoCivil = "";
+        this.data_nascimento = "";
+        this.estado_civil = "";
     }
 
     @Override
     public String toString() {
         return "" +
                 "name='" + name + '\'' +
-                ", estadoCivil='" + estadoCivil + '\'' +
-                ", dataNascimento='" + dataNascimento + '\'';
+                ", estadoCivil='" + estado_civil + '\'' +
+                ", dataNascimento='" + data_nascimento + '\'';
     }
 }

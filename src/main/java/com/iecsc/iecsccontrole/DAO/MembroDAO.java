@@ -9,7 +9,7 @@ import java.sql.SQLException;
 
 public class MembroDAO {
 
-    Connection con;
+    public Connection con;
     PreparedStatement ps;
     ResultSet rs;
     MembroDTO membroDTO;
@@ -35,10 +35,23 @@ public class MembroDAO {
         try{
             ps = con.prepareStatement(sql);
             ps.setString(1, membroDTO.getName());
-            ps.setString(2, membroDTO.getEstadoCivil());
-            ps.setString(3, membroDTO.getDataNascimento());
+            ps.setString(2, membroDTO.getEstado_civil());
+            ps.setString(3, membroDTO.getData_nascimento());
             ps.executeUpdate();
             con.close();
+            return rs;
+        }catch (SQLException err){
+            System.out.println(err.getMessage());
+            return null;
+        }
+    }
+
+    public ResultSet getAllMembros(){
+        con = new DBConnection().connectDAO();
+        String sql = "SELECT * FROM membros";
+        try{
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
             return rs;
         }catch (SQLException err){
             System.out.println(err.getMessage());

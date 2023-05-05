@@ -20,37 +20,48 @@ import java.time.LocalDate;
 public class HelloController {
     @FXML
     private Label welcomeText;
-
     @FXML
     private TextField nameTextField;
-
     @FXML
     private ToggleGroup estadoCivil;
-
     @FXML
     private DatePicker birthDateTextField;
     //
     //
     @FXML
     private TextField insertValueTextField;
-
     @FXML
     private TextField insertRegisterTypeTextField;
+    @FXML
+    private TextField entradaMembroNameTextfield;
+
 
     @FXML
     protected void  onHelloButtonClick() {
         welcomeText.setText("Welcome to JavaFX Application!");
-        Teste teste = new Teste();
-        teste.testarConnection();
     }
 
     @FXML
     public void initialize() {
+        MembroService membroService = new MembroService();
+
         ObservableList<String> registerTypesOptions = FXCollections.observableArrayList();
+        ObservableList<String> membroNameInsertEntrada = FXCollections.observableArrayList();
+
+        for(MembroDTO dto : membroService.getAllMembros()){
+            membroNameInsertEntrada.add(dto.getName());
+        }
         for(RegisterType registerType : RegisterType.values()){
             registerTypesOptions.add(registerType.name());
         }
+
         TextFields.bindAutoCompletion(insertRegisterTypeTextField, registerTypesOptions);
+        TextFields.bindAutoCompletion(entradaMembroNameTextfield, membroNameInsertEntrada);
+        insertRegisterTypeTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            entradaMembroNameTextfield.setVisible(
+                    newValue.equals(RegisterType.ENTRADA_DIZIMO.toString()) ||
+                    newValue.equals(RegisterType.ENTRADA_OFERTA.toString()));
+        });
         insertValueTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             try{
                 CurrencyConverter converter = new CurrencyConverter();

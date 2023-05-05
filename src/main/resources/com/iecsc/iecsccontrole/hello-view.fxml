@@ -67,7 +67,7 @@
                                        <Font size="14.0" />
                                     </font>
                                  </TextField>
-                                 <Button layoutX="494.0" layoutY="366.0" mnemonicParsing="false" onAction="#onInsertRegister" prefHeight="30.0" prefWidth="252.0" text="Inserir">
+                                 <Button fx:id="insertEntradaButton" layoutX="494.0" layoutY="366.0" mnemonicParsing="false" onAction="#onInsertRegister" prefHeight="30.0" prefWidth="252.0" text="Inserir">
                                     <font>
                                        <Font size="14.0" />
                                     </font></Button>
@@ -86,6 +86,11 @@
                                        <Font size="10.0" />
                                     </font>
                                  </Text>
+                                 <TextField fx:id="entradaMembroNameTextfield" layoutX="766.0" layoutY="272.0" prefHeight="39.0" prefWidth="198.0" promptText="Nome Membro" visible="false">
+                                    <font>
+                                       <Font size="15.0" />
+                                    </font>
+                                 </TextField>
                               </children></AnchorPane>
                         </content>
                      </Tab>
